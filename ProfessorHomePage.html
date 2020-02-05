@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Geolocation Professor Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+  <style>
+	.jumbotron {
+		background-image: url("images/html5-geolocation-api.png");
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Geolocation Attendance</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="ProfessorHomePage.html">Home</a></li>
+      <li><a href="deleteStudent.html">Remove Students</a></li>
+      <li><a href="deleteClass.html">Remove Class</a></li>
+      <li><a href="Tutorial.html">Tutorial</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" id="jumbo">
+  <div class="jumbotron">
+    <h1><b>Geolocation Attendance</b></h1>      
+    <h3><b>Quick Accurate Secure</b></h3>
+  </div>
+</div>
+
+<div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3>Create A New Class</h3></div>
+              <div class="panel-body">Create your class here</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="location.href='AddNewClass.html'">New Class</button>
+          </div>
+		  <div class="col-sm-3">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3>Add Students</h3></div>
+              <div class="panel-body">Add students to an existing class</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="location.href='AddNewStudent.html'">New Students</button>
+          </div>
+          <div class="col-sm-3">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3>View Classes</h3></div>
+              <div class="panel-body">View your classes here</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="location.href='viewClasses.html'">Classes</button>
+          </div>
+          <div class="col-sm-3">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3>View Students</h3></div>
+              <div class="panel-body">View your students here</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="location.href='viewStudents.html'">Students</button>
+          </div>
+        </div>
+      </div>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>New Class Creation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+  <script>
+  
+  
+  ClassInfoJsonData = {
+		"CourseID" 		: "",
+		"CourseName" 	: "",
+		"Building"		: "",
+		"Room"			: "",
+		"BeginDate"		: "",
+		"EndDate"		: "",
+		"BeginTime"		: "",
+		"EndTime" 		: "",
+		"Schedule"		: ""
+	}
+	
+	function formChecker(){
+		allFilled = true
+		
+		if(document.getElementById("CourseID").value == ""){allFilled = false }
+		if(document.getElementById("CourseName").value == ""){allFilled = false }
+		if(document.getElementById("Building").value == "-----"){allFilled = false }
+		if(document.getElementById("Room").value == ""){allFilled = false }
+		if(document.getElementById("BeginDate").value == ""){allFilled = false }
+		if(document.getElementById("EndDate").value == ""){allFilled = false }
+		if(document.getElementById("BeginTime").value == ""){allFilled = false }
+		if(document.getElementById("EndTime").value == ""){allFilled = false }
+		if(document.getElementById("Monday").checked == false && document.getElementById("Tuesday").checked == false && document.getElementById("Wednesday").checked == false &&
+		   document.getElementById("Thursday").checked == false && document.getElementById("Friday").checked == false && document.getElementById("Saturday").checked == false &&
+		   document.getElementById("Sunday").checked == false){ allFilled = false }
+		   
+		if(allFilled == false){ alert("please fill out all fields") }
+		else{ sendToClassDB() }
+	}
+	
+	function sendToClassDB(){
+		ClassInfoJsonData.CourseID = document.getElementById("CourseID").value.trim()
+		ClassInfoJsonData.CourseName = document.getElementById("CourseName").value.trim()
+		ClassInfoJsonData.Building = document.getElementById("Building").value.trim()
+		ClassInfoJsonData.Room = document.getElementById("Room").value.trim()
+		ClassInfoJsonData.BeginDate = document.getElementById("BeginDate").value.trim()
+		ClassInfoJsonData.EndDate = document.getElementById("EndDate").value.trim()
+		ClassInfoJsonData.BeginTime = document.getElementById("BeginTime").value.trim()
+		ClassInfoJsonData.EndTime = document.getElementById("EndTime").value.trim()
+		ClassInfoJsonData.Schedule = ""
+		
+		if(document.getElementById("Monday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Monday").value + " " }
+		if(document.getElementById("Tuesday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Tuesday").value + " " }
+		if(document.getElementById("Wednesday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Wednesday").value + " " }
+		if(document.getElementById("Thursday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Thursday").value + " " }
+		if(document.getElementById("Friday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Friday").value + " " }
+		if(document.getElementById("Saturday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Saturday").value + " " }
+		if(document.getElementById("Sunday").checked == true){ ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule + document.getElementById("Sunday").value + " " }
+		
+		ClassInfoJsonData.Schedule = ClassInfoJsonData.Schedule.trim()
+		
+		let ClassInfoData = JSON.stringify(ClassInfoJsonData)
+		alert(ClassInfoData)
+		makeRequestAddNewClass('AddNewClass.php', ClassInfoData);
+	}
+	
+	var httpRequestAddNewClass;
+	function makeRequestAddNewClass(url,str) {
+	//alert("000");
+	console.log("000");
+			httpRequestAddNewClass = new XMLHttpRequest(); 
+			if (!httpRequestAddNewClass) { 
+			  alert('Cannot create an XMLHTTP instance');
+			  return false;
+			}
+			httpRequestAddNewClass.onreadystatechange = alertContentsAddNewClass;  
+			httpRequestAddNewClass.open('POST', url);  
+			httpRequestAddNewClass.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			httpRequestAddNewClass.send('myarray='+ str); 
+		}
+	  
+	function alertContentsAddNewClass() {
+		  try {
+			//alert("111");
+			console.log("111");
+			if (httpRequestAddNewClass.readyState === XMLHttpRequest.DONE) {
+				//alert(httpRequestAddNewClass.status);
+				//alert("222");
+				console.log("222");
+			  if (httpRequestAddNewClass.status === 200) {
+					//alert("333");
+					console.log("333");
+					alert(httpRequestAddNewClass.responseText)
+					let response = JSON.parse(httpRequestAddNewClass.responseText);
+					alert(response.reason);
+			  } else {
+				alert('There was a problem with the request.');
+				//alert(httpRequestAddNewClass.status);
+			  }
+			}
+		  }
+		  catch( e ) { 
+			alert('...Caught Exception: ' + e.description);
+		  }
+		}
+	
+  </script>
+  
+  <style>
+	.jumbotron {
+		background-image: url("images/html5-geolocation-api.png");
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+  </style>
+</head>
+
+<body>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Geolocation Attendance</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="ProfessorHomePage.html">Home</a></li>
+      <li><a href="deleteStudent.html">Remove Students</a></li>
+      <li><a href="deleteClass.html">Remove Class</a></li>
+      <li><a href="Tutorial.html">Tutorial</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" id="jumbo">
+  <div class="jumbotron">
+    <h1><b>Geolocation Attendance</b></h1>      
+    <h3><b>Quick Accurate Secure</b></h3>
+  </div>
+</div>
+
+<div class="container">
+  <h2>New Class:</h2>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="CourseID">Course ID:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="CourseID" placeholder="Course ID" name="CourseID">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="CourseName">Course Name:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="CourseName" placeholder="Course Name" name="CourseName">
+      </div>
+    </div>
+	<div class="form-group">
+	  <label class="control-label col-sm-2" for="Building">Select Building:</label>
+	  <div class="col-sm-10">
+		  <select class="form-control" id="Building">
+			<option>-----</option>
+			<option>Science 1</option>
+			<option>Science 2</option>
+			<option>Art Building</option>
+			<option>McKee Fisk</option>
+			<option>Craig School</option>
+			<option>Kerman school of education</option>
+			<option>Lab School</option>
+			<option>Music Building</option>
+			<option>Speech Art</option>
+			<option>Ag Science</option>
+			<option>Plant operations</option>
+			<option>Ag Mechanics</option>
+			<option>Ag Operations</option>
+			<option>Engineering east</option>
+			<option>Grosse Industrial Tech</option>
+			<option>Engineering west</option>
+			<option>Social Science</option>
+			<option>Family Food Science</option>
+			<option>Professional Human Service</option>
+			<option>South Gym</option>
+			<option>North Gym</option>
+			<option>TEST</option>
+		  </select>
+	  </div>
+	</div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="Room">Room:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="Room" placeholder="Room Number" name="Room">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="BeginDate">Begin Date:</label>
+      <div class="col-sm-10">          
+        <input type="date" class="form-control" id="BeginDate" name="BeginDate">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="EndDate">End Date:</label>
+      <div class="col-sm-10">          
+        <input type="date" class="form-control" id="EndDate" name="EndDate">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="BeginTime">Begin Time:</label>
+      <div class="col-sm-10">          
+        <input type="time" class="form-control" id="BeginTime" name="BeginTime">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="EndTime">End Time:</label>
+      <div class="col-sm-10">          
+        <input type="time" class="form-control" id="EndTime" name="EndTime">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="Schedule">Schedule:</label>
+      <div class="col-sm-10">          
+        <label class="checkbox-inline"><input type="checkbox" id="Monday" value="Mon">Monday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Tuesday" value="Tue">Tuesday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Wednesday" value="Wed">Wednesday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Thursday" value="Thu">Thursday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Friday" value="Fri">Friday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Saturday" value="Sat">Saturday</label>
+		<label class="checkbox-inline"><input type="checkbox" id="Sunday" value="Sun">Sunday</label>
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" onclick="formChecker()">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

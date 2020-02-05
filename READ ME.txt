@@ -1,0 +1,21 @@
+Option 1 to initialize database:
+	1. Create database named "geolocationattendance" in php admin
+	2. Navigate to the newly created database in php admin
+	3. Select the SQL tab
+	4. open the file "geolocationattendanceTABLESandDATA.sql"
+	5. Copy contents into the text box in the SQL tab
+	6. Click GO
+
+Option 2 to initialize database:
+	1. Create database named "geolocationattendance" in php admin
+	2. Navigate to the newly created database in php admin
+	3. Select import tab
+	4. Browse for "geolocationattendanceTABLESandDATA.sql"
+	5. Click GO
+
+You will need to create a username and password. After the username and password are created,
+locate the "configMySQL.php" file and update the username and password.
+
+http://localhost/geolocation_attendance/ProfessorHomePage.html is the home page
+
+http://localhost/geolocation_attendance/Student_Sign_In_Page.html is the student sign in page

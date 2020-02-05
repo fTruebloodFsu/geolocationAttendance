@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Geolocation Professor Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+  <script>
+  ClassDataJSON = {
+		"CourseID"		: "",
+		"CourseName"		: ""
+  }
+  
+  function deleteClass(){
+  let CID = document.getElementById('CourseID').value
+  let CName = document.getElementById('CourseName').value
+  
+  ClassDataJSON.CourseID = CID;
+  ClassDataJSON.CourseName = CName;
+  
+  let classToDelete = JSON.stringify(ClassDataJSON);
+  makeRequestRemoveCID('deleteClass.php', classToDelete);
+  }
+  
+  var httpRequestRemoveCID;
+  function makeRequestRemoveCID(url,str) {
+	//alert("000");
+			httpRequestRemoveCID = new XMLHttpRequest(); 
+			if (!httpRequestRemoveCID) { 
+			  alert('Cannot create an XMLHTTP instance');
+			  return false;
+			}
+			httpRequestRemoveCID.onreadystatechange = alertContentsRemoveCID;  
+			httpRequestRemoveCID.open('POST', url);  
+			httpRequestRemoveCID.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			httpRequestRemoveCID.send('myarray='+ str); 
+		}
+	  
+  function alertContentsRemoveCID() {
+		  try {
+			//alert("111");
+			if (httpRequestRemoveCID.readyState === XMLHttpRequest.DONE) {
+				//alert(httpRequestRemoveCID.status);
+				//alert("222");
+			  if (httpRequestRemoveCID.status === 200) {
+					//alert("333");
+					alert(httpRequestRemoveCID.responseText)
+					let response = JSON.parse(httpRequestRemoveCID.responseText);
+					alert(response.reason);
+			  } else {
+				alert('There was a problem with the request.');
+				//alert(httpRequestRemoveCID.status);
+			  }
+			}
+		  }
+		  catch( e ) { 
+			alert('...Caught Exception: ' + e.description);
+		  }
+		}
+  
+  
+  </script>
+  <style>
+	.jumbotron {
+		background-image: url("images/html5-geolocation-api.png");
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+  </style>
+  
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Geolocation Attendance</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="ProfessorHomePage.html">Home</a></li>
+      <li><a href="deleteStudent.html">Remove Students</a></li>
+      <li><a href="deleteClass.html">Remove Class</a></li>
+      <li><a href="Tutorial.html">Tutorial</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" id="jumbo">
+  <div class="jumbotron">
+    <h1><b>Geolocation Attendance</b></h1>      
+    <h3><b>Quick Accurate Secure</b></h3>
+  </div>
+</div>
+
+<form class="form-horizontal">
+<!--<div style="color:red;margin-left:9vw;font-size: 1vw">*If you are using a VPN, you will not be marked as present</div>-->
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="CourseID">Course ID:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="CourseID" placeholder="CourseID" name="CourseID">
+      </div>
+    </div>
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="CourseName">Course Name:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="CourseName" placeholder="CourseName" name="CourseName">
+      </div>
+    </div>
+	<div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-primary" onclick="deleteClass()">Submit</button>
+      </div>
+    </div>
+</form>
+
+</body>
+</html>
